@@ -9,6 +9,9 @@ import com.task.tracker.entity.Task;
 import com.task.tracker.repository.TaskRepository;
 import com.task.tracker.service.TaskService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class TaskServiceImp implements TaskService{
 	
 	@Autowired
@@ -35,7 +38,7 @@ public class TaskServiceImp implements TaskService{
 				return task.get();
 			}
 		} catch (Exception e) {
-			
+			log.error("exception "+e);
 		}
 		
 		return null;
