@@ -1,6 +1,7 @@
 package com.task.tracker.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,29 +29,52 @@ public class TaskController {
 	
 	@GetMapping
 	public ResponseEntity<List<Task>> findAllTask(){
-	log.info("fetching all tasks");
-	return new ResponseEntity<List<Task>>(taskService.getAllTask(),HttpStatus.OK);
+		log.info("fetching all tasks");
+		List<Task> taskList = taskService.getAllTask();
+		if(!taskList.isEmpty()) {
+			return new ResponseEntity<List<Task>>(taskList,HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<List<Task>>(taskList,HttpStatus.NO_CONTENT);
+		}
+		
 	}
 	
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Task> getTaskById(@PathVariable Integer id){
 		log.info("get Task By Id");
-		return new ResponseEntity<Task>(taskService.getTaskById(id),HttpStatus.FOUND);
+		Task task= taskService.getTaskById(id);
+		if(task!=null) {
+			return new ResponseEntity<Task>(task,HttpStatus.FOUND);
+		}
+		else {
+			return  new ResponseEntity<Task>(task,HttpStatus.NOT_FOUND);
+		}
 	}
 	
 	@PostMapping
 	public ResponseEntity<Task> addTask(@RequestBody Task task){
 		log.info("adding new task");
-		return new ResponseEntity<Task>(taskService.addTask(task),HttpStatus.CREATED);
+		Task addedTask = taskService.addTask(task);
+		if(task!=null) {
+			return new ResponseEntity<Task>(addedTask,HttpStatus.CREATED);
+		}
+		else {
+			return new ResponseEntity<Task>(addedTask,HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteTaskById(@PathVariable Integer id){
 		log.info("deleting task by id");
-		taskService.deleteTaskById(id);
-		return new ResponseEntity<String>("Task deleted",HttpStatus.OK);
+		if(taskService.deleteTaskById(id)) {
+			return new ResponseEntity<String>("Task deleted",HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<String>("Task not with given id not exist ",HttpStatus.NOT_FOUND);
+		}
 	}
 	
 

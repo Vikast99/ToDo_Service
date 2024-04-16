@@ -70,28 +70,37 @@ public class TaskServiceImp implements TaskService{
 	
 	@Override
 	public Task updateTask(Task newTask, Integer id) {
-		
-		Optional<Task> task = taskRepository.findById(id);
-		
-		if(task.isPresent()) {
-			if(!newTask.getTitle().equals(null)) {
-				task.get().setTitle(newTask.getTitle());
+		try {
+			Optional<Task> task = taskRepository.findById(id);
+			log.info("task "+task);
+			if(task.isPresent()) {
+				if(!newTask.getTitle().equals(null)) {
+					task.get().setTitle(newTask.getTitle());
+				}
+				if(!newTask.getDescription().equals(null)) {
+					task.get().setDescription(newTask.getDescription());
+				}
+				return taskRepository.save(task.get());
 			}
-			if(!newTask.getDescription().equals(null)) {
-				task.get().setDescription(newTask.getDescription());
-			}
-			return taskRepository.save(task.get());
+			
+		} catch (Exception e) {
+			log.error("exception "+e);
 		}
+	
 		return null;
 	}
 
 	@Override
 	public boolean deleteTaskById(Integer id) {
-
-		Optional<Task> task=taskRepository.findById(id);
-		if(task.isPresent()) {
-			taskRepository.deleteById(id);
-			return true;
+		
+		try {
+			Optional<Task> task=taskRepository.findById(id);
+			if(task.isPresent()) {
+				taskRepository.deleteById(id);
+				return true;
+			}
+		} catch (Exception e) {
+			log.error("exception "+e);
 		}
 		return false;
 		
