@@ -13,25 +13,19 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "task")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Task {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="task_id")
-	private Integer id;
-	
-	
-	@Column(name="task_title")
-	private String title;
-	
-	@Column(name="task_description")
-	private String description;
-	
 
+	private Integer id;
+
+	private String title;
+
+	private String description;
 
 }

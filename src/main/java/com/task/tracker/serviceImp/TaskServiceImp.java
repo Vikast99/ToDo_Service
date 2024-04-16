@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.task.tracker.entity.Task;
 import com.task.tracker.repository.TaskRepository;
@@ -12,6 +13,7 @@ import com.task.tracker.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Service
 public class TaskServiceImp implements TaskService{
 	
 	@Autowired
