@@ -52,7 +52,19 @@ public class TaskServiceImp implements TaskService{
 
 	@Override
 	public Task addTask(Task task) {
-		return taskRepository.save(task);	
+		try {
+			
+			Optional<Task> existingTask = taskRepository.findByTitle(task.getTitle()); 
+			log.info("existingTask "+existingTask);
+			if(existingTask.isEmpty()) {
+				return taskRepository.save(task);
+			}
+			
+		} catch (Exception e) {
+			log.error("exception "+e);
+		}
+		
+		return null;	
 		}
 		
 	
@@ -60,6 +72,7 @@ public class TaskServiceImp implements TaskService{
 	public Task updateTask(Task newTask, Integer id) {
 		
 		Optional<Task> task = taskRepository.findById(id);
+		
 		if(task.isPresent()) {
 			if(!newTask.getTitle().equals(null)) {
 				task.get().setTitle(newTask.getTitle());
