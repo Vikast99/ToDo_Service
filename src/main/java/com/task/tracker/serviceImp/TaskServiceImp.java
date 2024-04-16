@@ -67,7 +67,7 @@ public class TaskServiceImp implements TaskService{
 			if(!newTask.getDescription().equals(null)) {
 				task.get().setDescription(newTask.getDescription());
 			}
-			taskRepository.save(task.get());
+			return taskRepository.save(task.get());
 		}
 		return null;
 	}
