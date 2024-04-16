@@ -28,10 +28,16 @@ public class TaskServiceImp implements TaskService{
 
 	@Override
 	public Task getTaskById(Integer id) {
-		Optional<Task> task=taskRepository.findById(id);
-		if(task.isPresent()) {
-			return task.get();
+		
+		try {
+			Optional<Task> task=taskRepository.findById(id);
+			if(task.isPresent()) {
+				return task.get();
+			}
+		} catch (Exception e) {
+			
 		}
+		
 		return null;
 	}
 
