@@ -43,7 +43,7 @@ public class TaskServiceImp implements TaskService{
 				return task.get();
 			}
 		} catch (Exception e) {
-			
+			log.error("exception "+e);
 		}
 		
 		return null;
