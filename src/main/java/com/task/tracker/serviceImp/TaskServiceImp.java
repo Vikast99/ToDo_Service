@@ -19,9 +19,10 @@ public class TaskServiceImp implements TaskService{
 
 	@Override
 	public List<Task> getAllTask() {
-		
+	
 		try {
 			List<Task> taskList=taskRepository.findAll();
+			log.info("list of tasks "+taskList);
 			if(!taskList.isEmpty()) {
 				return taskList;
 			}
